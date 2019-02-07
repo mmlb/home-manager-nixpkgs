@@ -4,7 +4,7 @@
 , libtool
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "libvterm-neovim";
   # Releases are not tagged, look at commit history to find latest release
   version = "0.1.3";

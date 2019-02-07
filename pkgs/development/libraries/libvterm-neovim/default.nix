@@ -6,8 +6,7 @@
 
 stdenv.mkDerivation rec {
   pname = "libvterm-neovim";
-  # Releases are not tagged, look at commit history to find latest release
-  version = "0.1.3";
+  version = "unstable-2020-01-06g${builtins.substring 0 9 src.rev}";
 
   src = fetchFromGitHub {
     owner = "neovim";

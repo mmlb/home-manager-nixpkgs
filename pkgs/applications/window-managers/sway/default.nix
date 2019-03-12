@@ -39,6 +39,10 @@ stdenv.mkDerivation rec {
     "-Dtray=enabled" "-Dman-pages=enabled"
   ];
 
+  postPatch = ''
+    sed -i "/^project(/,/^)/ s/\\bversion: '\([0-9]\.[0-9]\)'/version: '\1-${version}'/" meson.build
+  '';
+
   meta = with stdenv.lib; {
     description = "i3-compatible tiling Wayland compositor";
     homepage    = "https://swaywm.org";

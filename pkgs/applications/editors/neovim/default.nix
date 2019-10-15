@@ -1,6 +1,6 @@
 { stdenv, fetchFromGitHub, cmake, gettext, msgpack, libtermkey, libiconv
 , libuv, lua, ncurses, pkgconfig
-, unibilium, xsel, gperf
+, unibilium, utf8proc, xsel, gperf
 , libvterm-neovim
 , glibcLocales ? null, procps ? null
 
@@ -52,6 +52,7 @@ in
       ncurses
       neovimLuaEnv
       unibilium
+      utf8proc
     ] ++ optional stdenv.isDarwin libiconv
       ++ optionals doCheck [ glibcLocales procps ]
     ;

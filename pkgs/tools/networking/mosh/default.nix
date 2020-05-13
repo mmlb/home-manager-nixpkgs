@@ -4,12 +4,12 @@
 
 stdenv.mkDerivation rec {
   pname = "mosh";
-  version = "1.3.2";
+  version = "unstable-2017-07-21g${builtins.substring 0 9 src.rev}";
 
   src = fetchFromGitHub {
     owner = "mobile-shell";
     repo = pname;
-    rev = "${pname}-${version}";
+    rev = "cf73e1f8799b01ad1ed9731c6b3d239b68509222";
     sha256 = "085p3xhvlszxsgqyy6clcgcy5m4ci6n4x96r2v2s7lq104c7fx00";
   };
 

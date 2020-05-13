@@ -18,6 +18,8 @@ stdenv.mkDerivation rec {
   # $out for the library and $examples for the example programs (in examples):
   outputs = [ "out" "examples" ];
 
+  enableParallelBuilding = true;
+
   nativeBuildInputs = [ meson ninja pkg-config wayland ];
 
   buildInputs = [
@@ -30,6 +32,8 @@ stdenv.mkDerivation rec {
     # Add the revision to the version
     sed -i "/^project(/,/^)/ s/\\bversion: '\([0-9]\+\.[0-9]\+\.[0-9]\+\)'/version: '\1-${version}'/" meson.build
   '';
+
+  mesonFlags = [ "-Dlogind-provider=systemd" ];
 
   postInstall = ''
     # Copy the library to $examples

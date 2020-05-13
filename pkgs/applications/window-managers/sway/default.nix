@@ -1,6 +1,6 @@
 { stdenv, fetchFromGitHub, makeWrapper
 , meson, ninja
-, pkgconfig, scdoc
+, pkg-config, scdoc
 , wayland, libxkbcommon, pcre, json_c, dbus, libevdev
 , pango, cairo, libinput, libcap, pam, gdk-pixbuf, librsvg
 , wlroots, wayland-protocols
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
-    pkgconfig meson ninja scdoc
+    pkg-config meson ninja scdoc
   ];
 
   buildInputs = [

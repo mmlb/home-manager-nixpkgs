@@ -26,6 +26,11 @@ stdenv.mkDerivation rec {
     libpng ffmpeg
   ];
 
+  postPatch = ''
+    # It happens from time to time that the version wasn't updated:
+    sed -i "/^project(/,/^)/ s/\\bversion: '\([0-9]\.[0-9]\.[0-9]\)'/version: '\1-${version}'/" meson.build
+  '';
+
   postInstall = ''
     # Copy the library to $examples
     mkdir -p $examples/lib

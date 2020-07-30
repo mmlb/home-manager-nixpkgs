@@ -2,20 +2,20 @@
 
 buildGoModule rec {
   pname = "elvish";
-  version = "0.16.1";
+  version = "unstable-2021-01-24g${builtins.substring 0 9 src.rev}";
 
   excludedPackages = [ "website" ];
 
-  ldflags = [ "-s" "-w" "-X github.com/elves/elvish/pkg/buildinfo.Version==${version}" "-X github.com/elves/elvish/pkg/buildinfo.Reproducible=true" ];
+  buildFlagsArray = [ "-ldflags=-s -w -X github.com/elves/elvish/pkg/buildinfo.Version==${version} -X github.com/elves/elvish/pkg/buildinfo.Reproducible=true" ];
 
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;
-    rev = "v${version}";
-    sha256 = "sha256-i7RJiR1Mta2TrWBSUk0WM3InMV2cwbdlp3KHUdZgQ8I=";
+    rev = "1c2fa28ccef9f4687a0bf69a62463c40127607b7";
+    sha256 = "1jksdpf86miz1dv3vrmvpvz4k1c2m23dway6a7b1cypg03c68a75";
   };
 
-  vendorSha256 = "sha256-5tZwGrp/L9L+pf/yp8zlbb0voe60+if+NNf8ua2MujI=";
+  vendorSha256 = "124m9680pl7wrh7ld7v39dfl86r6vih1pjk3bmbihy0fjgxnnq0b";
 
   doCheck = false;
 

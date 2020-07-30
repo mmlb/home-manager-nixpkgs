@@ -1,16 +1,18 @@
-{ lib, stdenv, fetchFromGitHub }:
+{ lib, stdenv, fetchFromGitHub, ncurses, asciidoc, docbook_xsl, libxslt, pkg-config }:
 
 with lib;
 
 stdenv.mkDerivation rec {
   pname = "kakoune-unwrapped";
-  version = "2021.08.28";
+  version = "unstable-2020-09-01g${builtins.substring 0 9 src.rev}";
   src = fetchFromGitHub {
-    repo = "kakoune";
     owner = "mawww";
-    rev = "v${version}";
-    sha256 = "13kc68vkrzg89khir6ayyxgbnmz16dhippcnw09hhzxivf5ayzpy";
+    repo = "kakoune";
+    rev = "e0d2602e6a924c9a4067fa9ff23f034b906dd56d";
+    sha256 = "091qzk0qs7hql0q51hix99srgma35mhdnjfd5ncfba1bmc1h8x5i";
   };
+  nativeBuildInputs = [ pkg-config ];
+  buildInputs = [ ncurses asciidoc docbook_xsl libxslt ];
   makeFlags = [ "debug=no" "PREFIX=${placeholder "out"}" ];
 
   preConfigure = ''

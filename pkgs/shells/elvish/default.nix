@@ -2,20 +2,22 @@
 
 buildGoModule rec {
   pname = "elvish";
-  version = "unstable-2020-08-16g${builtins.substring 0 9 src.rev}";
+  version = "unstable-2021-01-19g${builtins.substring 0 9 src.rev}";
 
   excludedPackages = [ "website" ];
 
-  buildFlagsArray = [ "-ldflags=-s -w -X github.com/elves/elvish/pkg/buildinfo.Version==${version} -X github.com/elves/elvish/pkg/buildinfo.Reproducible=true" ];
+  buildFlagsArray = [
+    "-ldflags=-s -w -X github.com/elves/elvish/pkg/buildinfo.Version==${version} -X github.com/elves/elvish/pkg/buildinfo.Reproducible=true"
+  ];
 
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;
-    rev = "797d09603255901091fff9ae798a645f34cb5ad7";
-    sha256 = "05wp3cx4s2cjf60yncdpmycs5h4z1dlin56dmljmfwz4z099079b";
+    rev = "de562f84d4cc0d319d96f61c2a781f5ab3bc6c02";
+    sha256 = "1hw3jcxz5yfz6hh0m1inq1zzzxz17zs1m6l7wpk8x5nm5zfall44";
   };
 
-  vendorSha256 = "1f971n17h9bc0qcgs9ipiaw0x9807mz761fqm605br4ch1kp0897";
+  vendorSha256 = "124m9680pl7wrh7ld7v39dfl86r6vih1pjk3bmbihy0fjgxnnq0b";
 
   doCheck = false;
 
@@ -32,7 +34,5 @@ buildGoModule rec {
     platforms = with platforms; linux ++ darwin;
   };
 
-  passthru = {
-    shellPath = "/bin/elvish";
-  };
+  passthru = { shellPath = "/bin/elvish"; };
 }

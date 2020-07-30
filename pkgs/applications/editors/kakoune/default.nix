@@ -4,16 +4,17 @@ with stdenv.lib;
 
 stdenv.mkDerivation rec {
   pname = "kakoune-unwrapped";
-  version = "2020.01.16";
+  version = "unstable-2020-07-30g${builtins.substring 0 9 src.rev}";
   src = fetchFromGitHub {
     repo = "kakoune";
     owner = "mawww";
-    rev = "v${version}";
+    rev = "9ca479ed40ceea29eb3b7949fb776e92e5f6e8dc";
     sha256 = "16v6z1nzj54j19fraxhb18jdby4zfs1br91gxpg9s2s4nsk0km0b";
   };
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ ncurses asciidoc docbook_xsl libxslt ];
   makeFlags = [ "debug=no" ];
+  enableParallelBuilding = true;
 
   postPatch = ''
     export PREFIX=$out

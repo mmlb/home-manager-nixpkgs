@@ -1,41 +1,24 @@
-{ lib, stdenv, fetchFromGitHub, python3Packages, libunistring,
-  harfbuzz, fontconfig, pkg-config, ncurses, imagemagick, xsel,
-  libstartup_notification, libGL, libX11, libXrandr, libXinerama, libXcursor,
-  libxkbcommon, libXi, libXext, wayland-protocols, wayland,
-  lcms2,
-  installShellFiles,
-  dbus,
-  Cocoa,
-  CoreGraphics,
-  Foundation,
-  IOKit,
-  Kernel,
-  OpenGL,
-  libcanberra,
-  libicns,
-  libpng,
-  python3,
-  zlib,
-}:
+{ lib, stdenv, fetchFromGitHub, python3Packages, libunistring, harfbuzz
+, fontconfig, pkg-config, ncurses, imagemagick, xsel, libstartup_notification
+, libGL, libX11, libXrandr, libXinerama, libXcursor, libxkbcommon, libXi
+, libXext, wayland-protocols, wayland, lcms2, installShellFiles, dbus, Cocoa
+, CoreGraphics, Foundation, IOKit, Kernel, OpenGL, libcanberra, libicns, libpng
+, python3, zlib, }:
 
 with python3Packages;
 buildPythonApplication rec {
   pname = "kitty";
-  version = "0.21.0";
+  version = "unstable-2021-06-15g${builtins.substring 0 9 src.rev}";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "kovidgoyal";
     repo = "kitty";
-    rev = "v${version}";
-    sha256 = "sha256-n8ipIQAfKPVApJhuTrlSSsd6dlPeCUvk7rdiVmL9i+4=";
+    rev = "71c8d82c33a9c9b085f76a6896c639b6fbc0aa89";
+    sha256 = "18zja66h10a2gi9ymppa3bljs7nxc90830xrcj3wd2fxvkgb63ni";
   };
 
-  buildInputs = [
-    harfbuzz
-    ncurses
-    lcms2
-  ] ++ lib.optionals stdenv.isDarwin [
+  buildInputs = [ harfbuzz ncurses lcms2 ] ++ lib.optionals stdenv.isDarwin [
     Cocoa
     CoreGraphics
     Foundation
@@ -46,18 +29,26 @@ buildPythonApplication rec {
     python3
     zlib
   ] ++ lib.optionals stdenv.isLinux [
-    fontconfig libunistring libcanberra libX11
-    libXrandr libXinerama libXcursor libxkbcommon libXi libXext
-    wayland-protocols wayland dbus
+    fontconfig
+    libunistring
+    libcanberra
+    libX11
+    libXrandr
+    libXinerama
+    libXcursor
+    libxkbcommon
+    libXi
+    libXext
+    wayland-protocols
+    wayland
+    dbus
   ];
 
-  nativeBuildInputs = [
-    pkg-config sphinx ncurses
-    installShellFiles
-  ] ++ lib.optionals stdenv.isDarwin [
-    imagemagick
-    libicns  # For the png2icns tool.
-  ];
+  nativeBuildInputs = [ pkg-config sphinx ncurses installShellFiles ]
+    ++ lib.optionals stdenv.isDarwin [
+      imagemagick
+      libicns # For the png2icns tool.
+    ];
 
   propagatedBuildInputs = lib.optional stdenv.isLinux libGL;
 
@@ -83,30 +74,31 @@ buildPythonApplication rec {
 
   checkInputs = [ pillow ];
 
-  checkPhase =
-    let buildBinPath =
-      if stdenv.isDarwin
-        then "kitty.app/Contents/MacOS"
-        else "linux-package/bin";
-    in
-    ''
-      env PATH="${buildBinPath}:$PATH" ${python.interpreter} test.py
-    '';
+  checkPhase = let
+    buildBinPath = if stdenv.isDarwin then
+      "kitty.app/Contents/MacOS"
+    else
+      "linux-package/bin";
+  in ''
+    env PATH="${buildBinPath}:$PATH" ${python.interpreter} test.py
+  '';
 
   installPhase = ''
     runHook preInstall
     mkdir -p $out
     ${if stdenv.isDarwin then ''
-    mkdir "$out/bin"
-    ln -s ../Applications/kitty.app/Contents/MacOS/kitty "$out/bin/kitty"
-    mkdir "$out/Applications"
-    cp -r kitty.app "$out/Applications/kitty.app"
+      mkdir "$out/bin"
+      ln -s ../Applications/kitty.app/Contents/MacOS/kitty "$out/bin/kitty"
+      mkdir "$out/Applications"
+      cp -r kitty.app "$out/Applications/kitty.app"
 
-    installManPage 'docs/_build/man/kitty.1'
+      installManPage 'docs/_build/man/kitty.1'
     '' else ''
-    cp -r linux-package/{bin,share,lib} $out
+      cp -r linux-package/{bin,share,lib} $out
     ''}
-    wrapProgram "$out/bin/kitty" --prefix PATH : "$out/bin:${lib.makeBinPath [ imagemagick xsel ncurses.dev ]}"
+    wrapProgram "$out/bin/kitty" --prefix PATH : "$out/bin:${
+      lib.makeBinPath [ imagemagick xsel ncurses.dev ]
+    }"
     runHook postInstall
 
     installShellCompletion --cmd kitty \
@@ -116,10 +108,12 @@ buildPythonApplication rec {
   '';
 
   postInstall = ''
-    terminfo_src=${if stdenv.isDarwin then
-      ''"$out/Applications/kitty.app/Contents/Resources/terminfo"''
+    terminfo_src=${
+      if stdenv.isDarwin then
+        ''"$out/Applications/kitty.app/Contents/Resources/terminfo"''
       else
-      "$out/share/terminfo"}
+        "$out/share/terminfo"
+    }
 
     mkdir -p $terminfo/share
     mv "$terminfo_src" $terminfo/share/terminfo
@@ -130,7 +124,8 @@ buildPythonApplication rec {
 
   meta = with lib; {
     homepage = "https://github.com/kovidgoyal/kitty";
-    description = "A modern, hackable, featureful, OpenGL based terminal emulator";
+    description =
+      "A modern, hackable, featureful, OpenGL based terminal emulator";
     license = licenses.gpl3Only;
     changelog = "https://sw.kovidgoyal.net/kitty/changelog.html";
     platforms = platforms.darwin ++ platforms.linux;

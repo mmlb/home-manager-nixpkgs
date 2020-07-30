@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation rec {
   pname = "gitstatus";
-  version = "1.2.2";
+  version = "unstable-2020-07-04g${builtins.substring 0 9 src.rev}";
 
   src = fetchFromGitHub {
     owner = "romkatv";
-    repo = "gitstatus";
-    rev = "v${version}";
+    repo = pname;
+    rev = "89e9ebfd59f5ddfea4d97ae1e510273415a57a51";
     sha256 = "1kspz2fhryyjhn6gqf029rv0386a1ga08sf6g0l6smivw628k71l";
   };
 

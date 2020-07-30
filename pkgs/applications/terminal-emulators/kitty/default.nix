@@ -21,14 +21,14 @@
 with python3Packages;
 buildPythonApplication rec {
   pname = "kitty";
-  version = "0.20.2";
+  version = "unstable-2021-04-07g${builtins.substring 0 9 src.rev}";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "kovidgoyal";
     repo = "kitty";
-    rev = "v${version}";
-    sha256 = "sha256-FquvC3tL565711OQmq2ddNwpyJQGgn4dhG/TYZdCRU0=";
+    rev = "4822fa989e890958de6c988cc9dd597ef54b7331";
+    sha256 = "1mzmam8hz0imfxzavad4c5wn7whkkhp55qx3xlmn4zldgd3d0804";
   };
 
   buildInputs = [

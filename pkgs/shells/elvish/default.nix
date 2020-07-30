@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   pname = "elvish";
-  version = "0.17.0";
+  version = "unstable-2021-12-06g${builtins.substring 0 9 src.rev}";
 
   subPackages = "cmd/elvish";
 
@@ -13,7 +13,7 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;
-    rev = "v${version}";
+    rev = "07848397805e6e6d56f3c486b3666508b19d2c4b";
     sha256 = "sha256-F6yjfsEEBrD6kXUgbMrz+1mxrz0z+sdfeoyztpy7rEk=";
   };
 
@@ -33,7 +33,7 @@ buildGoModule rec {
         }
       }
 
-      expect version ${version}-dev-${version}
+      expect version 0.17.0-dev-${version}
       expect reproducible \$false
     "
 

@@ -8,14 +8,14 @@
 with python3Packages;
 buildPythonApplication rec {
   pname = "kitty";
-  version = "unstable-2021-04-07g${builtins.substring 0 9 src.rev}";
+  version = "unstable-2021-04-10g${builtins.substring 0 9 src.rev}";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "kovidgoyal";
     repo = "kitty";
-    rev = "4822fa989e890958de6c988cc9dd597ef54b7331";
-    sha256 = "1mzmam8hz0imfxzavad4c5wn7whkkhp55qx3xlmn4zldgd3d0804";
+    rev = "c989a7198b365d05bbf43e93d1cb1dc3be805264";
+    sha256 = "1yqz4qxk7vb7w9zrg7hpj1b3pssdvsjpwcixq38gqs31bs9vni8f";
   };
 
   buildInputs = [ harfbuzz ncurses lcms2 ] ++ lib.optionals stdenv.isDarwin [

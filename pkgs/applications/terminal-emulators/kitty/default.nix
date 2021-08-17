@@ -107,12 +107,13 @@ python3.pkgs.buildPythonApplication rec {
     wrapProgram "$out/bin/kitty" --prefix PATH : "$out/bin:${
       lib.makeBinPath [ imagemagick xsel ncurses.dev ]
     }"
-    runHook postInstall
 
     installShellCompletion --cmd kitty \
       --bash <("$out/bin/kitty" + complete setup bash) \
       --fish <("$out/bin/kitty" + complete setup fish) \
       --zsh  <("$out/bin/kitty" + complete setup zsh)
+
+    runHook postInstall
   '';
 
   postInstall = ''

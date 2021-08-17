@@ -10,8 +10,7 @@
 Cocoa, CoreGraphics, Foundation, imagemagick, IOKit, Kernel, OpenGL, libpng
 , zlib, }:
 
-with python3.pkgs;
-buildPythonApplication rec {
+python3.pkgs.buildPythonApplication rec {
   pname = "kitty";
   version = "0.21.2";
   format = "other";
@@ -49,8 +48,8 @@ buildPythonApplication rec {
     wayland-protocols
   ];
 
-  nativeBuildInputs = [ installShellFiles ncurses pkg-config sphinx ]
-    ++ lib.optionals stdenv.isDarwin [
+  nativeBuildInputs = [ installShellFiles ncurses pkg-config ]
+    ++ (with python3.pkgs; [ sphinx ]) ++ lib.optionals stdenv.isDarwin [
       imagemagick
       libicns # For the png2icns tool.
     ];
@@ -67,12 +66,12 @@ buildPythonApplication rec {
   buildPhase = ''
     runHook preBuild
     ${if stdenv.isDarwin then ''
-      ${python.interpreter} setup.py kitty.app \
+      ${python3.interpreter} setup.py kitty.app \
       --update-check-interval=0 \
       --disable-link-time-optimization
       make man
     '' else ''
-      ${python.interpreter} setup.py linux-package \
+      ${python3.interpreter} setup.py linux-package \
       --update-check-interval=0 \
       --egl-library='${lib.getLib libGL}/lib/libEGL.so.1' \
       --startup-notification-library='${libstartup_notification}/lib/libstartup-notification-1.so' \
@@ -81,7 +80,7 @@ buildPythonApplication rec {
     runHook postBuild
   '';
 
-  checkInputs = [ pillow ];
+  checkInputs = [ python3.pkgs.pillow ];
 
   checkPhase = let
     buildBinPath = if stdenv.isDarwin then
@@ -92,7 +91,7 @@ buildPythonApplication rec {
     # Fontconfig error: Cannot load default config file: No such file: (null)
     export FONTCONFIG_FILE=${fontconfig.out}/etc/fonts/fonts.conf
 
-    env PATH="${buildBinPath}:$PATH" ${python.interpreter} test.py
+    env PATH="${buildBinPath}:$PATH" ${python3.interpreter} test.py
   '';
 
   installPhase = ''

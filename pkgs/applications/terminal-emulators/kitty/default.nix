@@ -12,7 +12,7 @@ Cocoa, CoreGraphics, Foundation, imagemagick, IOKit, Kernel, OpenGL, libpng
 
 python3.pkgs.buildPythonApplication rec {
   pname = "kitty";
-  version = "0.21.2";
+  version = "unstable-2021-08-16g${builtins.substring 0 9 src.rev}";
   format = "other";
 
   src = fetchFromGitHub {
@@ -49,7 +49,13 @@ python3.pkgs.buildPythonApplication rec {
   ];
 
   nativeBuildInputs = [ installShellFiles ncurses pkg-config ]
-    ++ (with python3.pkgs; [ sphinx ]) ++ lib.optionals stdenv.isDarwin [
+    ++ (with python3.pkgs; [
+      furo
+      sphinx
+      sphinx-copybutton
+      sphinxext-opengraph
+      sphinx-inline-tabs
+    ]) ++ lib.optionals stdenv.isDarwin [
       imagemagick
       libicns # For the png2icns tool.
     ];

@@ -1,9 +1,14 @@
-{ lib, stdenv, fetchFromGitHub, python3Packages, libunistring, harfbuzz
-, fontconfig, pkg-config, ncurses, imagemagick, xsel, libstartup_notification
-, libGL, libX11, libXrandr, libXinerama, libXcursor, libxkbcommon, libXi
-, libXext, wayland-protocols, wayland, lcms2, installShellFiles, dbus, Cocoa
-, CoreGraphics, Foundation, IOKit, Kernel, OpenGL, libcanberra, libicns, libpng
-, python3, zlib, }:
+{ lib, stdenv, fetchFromGitHub, harfbuzz, installShellFiles, libicns, ncurses
+, pkg-config, python3, python3Packages
+
+# linux specific
+, dbus, fontconfig, lcms2, libcanberra, libGL, libstartup_notification
+, libunistring, libX11, libXcursor, libXext, libXi, libXinerama, libxkbcommon
+, libXrandr, wayland, wayland-protocols, xsel,
+
+# darwin specific
+Cocoa, CoreGraphics, Foundation, imagemagick, IOKit, Kernel, OpenGL, libpng
+, zlib, }:
 
 with python3Packages;
 buildPythonApplication rec {
@@ -18,33 +23,33 @@ buildPythonApplication rec {
     sha256 = "0y0mg8rr18mn0wzym7v48x6kl0ixd5q387kr5jhbdln55ph2jk9d";
   };
 
-  buildInputs = [ harfbuzz ncurses lcms2 ] ++ lib.optionals stdenv.isDarwin [
+  buildInputs = [ harfbuzz lcms2 ncurses ] ++ lib.optionals stdenv.isDarwin [
     Cocoa
     CoreGraphics
     Foundation
     IOKit
     Kernel
-    OpenGL
     libpng
+    OpenGL
     python3
     zlib
   ] ++ lib.optionals stdenv.isLinux [
-    fontconfig
-    libunistring
-    libcanberra
-    libX11
-    libXrandr
-    libXinerama
-    libXcursor
-    libxkbcommon
-    libXi
-    libXext
-    wayland-protocols
-    wayland
     dbus
+    fontconfig
+    libcanberra
+    libunistring
+    libX11
+    libXcursor
+    libXext
+    libXi
+    libXinerama
+    libxkbcommon
+    libXrandr
+    wayland
+    wayland-protocols
   ];
 
-  nativeBuildInputs = [ pkg-config sphinx ncurses installShellFiles ]
+  nativeBuildInputs = [ installShellFiles ncurses pkg-config sphinx ]
     ++ lib.optionals stdenv.isDarwin [
       imagemagick
       libicns # For the png2icns tool.

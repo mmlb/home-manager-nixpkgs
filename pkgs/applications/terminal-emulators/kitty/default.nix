@@ -1,5 +1,5 @@
 { lib, stdenv, fetchFromGitHub, harfbuzz, installShellFiles, libicns, ncurses
-, pkg-config, python3, python3Packages
+, pkg-config, python3
 
 # linux specific
 , dbus, fontconfig, lcms2, libcanberra, libGL, libstartup_notification
@@ -10,7 +10,7 @@
 Cocoa, CoreGraphics, Foundation, imagemagick, IOKit, Kernel, OpenGL, libpng
 , zlib, }:
 
-with python3Packages;
+with python3.pkgs;
 buildPythonApplication rec {
   pname = "kitty";
   version = "0.21.2";

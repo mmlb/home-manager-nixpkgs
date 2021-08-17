@@ -1,5 +1,5 @@
 { lib, stdenv, fetchFromGitHub, harfbuzz, installShellFiles, lcms2, librsync
-, libstartup_notification, ncurses, pkg-config, python3Packages, xsel
+, libstartup_notification, ncurses, pkg-config, python3, xsel
 
 # Linux Specific
 , dbus, fontconfig, libcanberra, libGL, libunistring, libX11, libXcursor
@@ -8,9 +8,9 @@
 
 # Darwin Specific
 , Cocoa, CoreGraphics, darwin, Foundation, imagemagick, IOKit, Kernel, libicns
-, libpng, OpenGL, python3, zlib }:
+, libpng, OpenGL, zlib }:
 
-with python3Packages;
+with python3.pkgs;
 buildPythonApplication rec {
   pname = "kitty";
   version = "0.24.2";

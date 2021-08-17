@@ -11,8 +11,7 @@
 , Cocoa, CoreGraphics, darwin, Foundation, imagemagick, IOKit, Kernel, libicns
 , libpng, OpenGL, zlib }:
 
-with python3.pkgs;
-buildPythonApplication rec {
+python3.pkgs.buildPythonApplication rec {
   pname = "kitty";
   version = "0.24.4";
   format = "other";
@@ -54,19 +53,17 @@ buildPythonApplication rec {
       wayland-protocols
     ];
 
-  nativeBuildInputs = [
-    furo
-    installShellFiles
-    ncurses
-    pkg-config
-    sphinx
-    sphinx-copybutton
-    sphinxext-opengraph
-    sphinx-inline-tabs
-  ] ++ lib.optionals stdenv.isDarwin [
-    imagemagick
-    libicns # For the png2icns tool.
-  ];
+  nativeBuildInputs = [ installShellFiles ncurses pkg-config ]
+    ++ (with python3.pkgs; [
+      furo
+      sphinx
+      sphinx-copybutton
+      sphinxext-opengraph
+      sphinx-inline-tabs
+    ]) ++ lib.optionals stdenv.isDarwin [
+      imagemagick
+      libicns # For the png2icns tool.
+    ];
 
   propagatedBuildInputs = lib.optional stdenv.isLinux libGL;
 
@@ -105,12 +102,12 @@ buildPythonApplication rec {
   in ''
     runHook preBuild
     ${if stdenv.isDarwin then ''
-      ${python.interpreter} setup.py kitty.app \
+      ${python3.interpreter} setup.py kitty.app \
       --disable-link-time-optimization \
       ${commonOptions}
       make man
     '' else ''
-      ${python.interpreter} setup.py linux-package \
+      ${python3.interpreter} setup.py linux-package \
       --egl-library='${lib.getLib libGL}/lib/libEGL.so.1' \
       --startup-notification-library='${libstartup_notification}/lib/libstartup-notification-1.so' \
       --canberra-library='${libcanberra}/lib/libcanberra.so' \
@@ -120,7 +117,7 @@ buildPythonApplication rec {
   '';
 
   checkInputs = [
-    pillow
+    python3.pkgs.pillow
 
     # Shells needed for shell integration tests
     bashInteractive
@@ -137,7 +134,7 @@ buildPythonApplication rec {
     # Fontconfig error: Cannot load default config file: No such file: (null)
     export FONTCONFIG_FILE=${fontconfig.out}/etc/fonts/fonts.conf
 
-    env PATH="${buildBinPath}:$PATH" ${python.interpreter} test.py
+    env PATH="${buildBinPath}:$PATH" ${python3.interpreter} test.py
   '';
 
   installPhase = ''

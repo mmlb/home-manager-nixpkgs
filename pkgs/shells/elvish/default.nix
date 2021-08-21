@@ -11,8 +11,8 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;
-    rev = "22ad09cc9355b870d218d38ba2101b27887c277e";
-    sha256 = "1jji0p287glr03mxay19zp7kn3rhxga4a62va07zp00chnivljj2";
+    rev = "92cb68fb32a5b5172ccadd8bc8c12b86830ebdf9";
+    sha256 = "1vjzjja39wql0q09ay6n0q3h5dn1p8z5fkrfb702zbj7g8bwdmhy";
   };
 
   vendorSha256 = "0cmsijnvkz6p6kz2gymlxshjzgbdwp6agwpzlpzd4bvzp8d71mp6";

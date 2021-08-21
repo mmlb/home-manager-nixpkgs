@@ -18,8 +18,8 @@ python3.pkgs.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "kovidgoyal";
     repo = "kitty";
-    rev = "cd7b4fcd8e0cda6fa2d5ca18a308630bffc7bba9";
-    sha256 = "0vpc17j8nxkq3w4kk05bfx4slv2k7mc29938pds6298fl59h676r";
+    rev = "d2a31a6a0f6c6bf949daf3e594cd3f34c4398d38";
+    sha256 = "16iizmyqkj18alcnpi63zhxi208zc08nwbsvl7lhzk5xzd3j5vnj";
   };
 
   buildInputs = [ harfbuzz lcms2 ncurses ] ++ lib.optionals stdenv.isDarwin [

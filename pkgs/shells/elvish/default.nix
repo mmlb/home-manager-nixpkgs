@@ -6,7 +6,11 @@ buildGoModule rec {
 
   excludedPackages = [ "website" ];
 
-  buildFlagsArray = [ "-ldflags=-s -w -X src.elv.sh/pkg/buildinfo.VersionSuffix=-dev-${builtins.substring 0 9 src.rev} -X src.elv.sh/pkg/buildinfo.Reproducible=true" ];
+  buildFlagsArray = [
+    "-ldflags=-s -w -X src.elv.sh/pkg/buildinfo.VersionSuffix=-dev-${
+      builtins.substring 0 9 src.rev
+    } -X src.elv.sh/pkg/buildinfo.Reproducible=true"
+  ];
 
   src = fetchFromGitHub {
     owner = "elves";
@@ -33,7 +37,5 @@ buildGoModule rec {
     platforms = with platforms; linux ++ darwin;
   };
 
-  passthru = {
-    shellPath = "/bin/elvish";
-  };
+  passthru = { shellPath = "/bin/elvish"; };
 }

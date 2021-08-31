@@ -49,7 +49,13 @@ python3.pkgs.buildPythonApplication rec {
   ];
 
   nativeBuildInputs = [ installShellFiles ncurses pkg-config ]
-    ++ (with python3.pkgs; [ sphinx ]) ++ lib.optionals stdenv.isDarwin [
+    ++ (with python3.pkgs; [
+      furo
+      sphinx
+      sphinx-copybutton
+      sphinxext-opengraph
+      sphinx-inline-tabs
+    ]) ++ lib.optionals stdenv.isDarwin [
       imagemagick
       libicns # For the png2icns tool.
     ];

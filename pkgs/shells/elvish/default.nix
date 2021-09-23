@@ -4,7 +4,7 @@ buildGoModule rec {
   pname = "elvish";
   version = "0.18.0";
 
-  subPackages = [ "cmd/elvish" ];
+  subPackages = "cmd/elvish";
 
   ldflags = [
     "-s"

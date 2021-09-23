@@ -1,5 +1,5 @@
 { lib, stdenv, fetchFromGitHub, harfbuzz, installShellFiles, libicns, ncurses
-, pkg-config, python3
+, pkg-config, python3, librsync
 
 # linux specific
 , dbus, fontconfig, lcms2, libcanberra, libGL, libstartup_notification
@@ -12,41 +12,42 @@ Cocoa, CoreGraphics, Foundation, imagemagick, IOKit, Kernel, OpenGL, libpng
 
 python3.pkgs.buildPythonApplication rec {
   pname = "kitty";
-  version = "unstable-2021-08-30g${builtins.substring 0 9 src.rev}";
+  version = "unstable-2021-09-21g${builtins.substring 0 9 src.rev}";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "kovidgoyal";
     repo = "kitty";
-    rev = "5ff66f6bfa150ea295fdb6737873d65351eb193e";
-    sha256 = "1acjq1hwbc4fzy595zb813az6l5maypal5llk9dxfwh598w2k7hx";
+    rev = "43c04df98ad6487a9b2cebeeb06cdfac64ad8814";
+    sha256 = "0fgdiir4hb8pc718aidnrckfj8y4dkhxbzfdp1x59dcx80i51zqm";
   };
 
-  buildInputs = [ harfbuzz lcms2 ncurses ] ++ lib.optionals stdenv.isDarwin [
-    Cocoa
-    CoreGraphics
-    Foundation
-    IOKit
-    Kernel
-    libpng
-    OpenGL
-    python3
-    zlib
-  ] ++ lib.optionals stdenv.isLinux [
-    dbus
-    fontconfig
-    libcanberra
-    libunistring
-    libX11
-    libXcursor
-    libXext
-    libXi
-    libXinerama
-    libxkbcommon
-    libXrandr
-    wayland
-    wayland-protocols
-  ];
+  buildInputs = [ harfbuzz lcms2 ncurses librsync ]
+    ++ lib.optionals stdenv.isDarwin [
+      Cocoa
+      CoreGraphics
+      Foundation
+      IOKit
+      Kernel
+      libpng
+      OpenGL
+      python3
+      zlib
+    ] ++ lib.optionals stdenv.isLinux [
+      dbus
+      fontconfig
+      libcanberra
+      libunistring
+      libX11
+      libXcursor
+      libXext
+      libXi
+      libXinerama
+      libxkbcommon
+      libXrandr
+      wayland
+      wayland-protocols
+    ];
 
   nativeBuildInputs = [ installShellFiles ncurses pkg-config ]
     ++ (with python3.pkgs; [

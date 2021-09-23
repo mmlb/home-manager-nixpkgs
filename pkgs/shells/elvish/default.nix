@@ -4,7 +4,7 @@ buildGoModule rec {
   pname = "elvish";
   version = "unstable-2021-02-02g${builtins.substring 0 9 src.rev}";
 
-  excludedPackages = [ "website" ];
+  excludedPackages = [ "./website" "./website/cmd/elvdoc" "./cmd/nodaemon/elvish" ];
 
   ldflags = [
     "-s"
@@ -15,6 +15,10 @@ buildGoModule rec {
     "-X src.elv.sh/pkg/buildinfo.Reproducible=true"
   ];
 
+  patchPhase = ''
+  rm -rf website
+  rm -rf cmd/nodaemon
+  '';
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;

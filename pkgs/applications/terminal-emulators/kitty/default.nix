@@ -13,14 +13,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "kitty";
-  version = "0.24.4";
+  version = "unstable-2022-02-01g${builtins.substring 0 9 src.rev}";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "kovidgoyal";
     repo = "kitty";
-    rev = "v${version}";
-    sha256 = "sha256-c6XM/xeGZ68srf8xQJA1iYCUR3kXNceTMxsZAnbFmug=";
+    rev = "43ceaf0b7e85422d7d97502c2407e94337b5a50d";
+    sha256 = "1bgg168849a32fbrf3dchbm2yi9zc11a749c7dia7cynvlk6gl72";
   };
 
   buildInputs = [ harfbuzz lcms2 librsync ncurses ]
@@ -68,21 +68,6 @@ python3.pkgs.buildPythonApplication rec {
   propagatedBuildInputs = lib.optional stdenv.isLinux libGL;
 
   outputs = [ "out" "terminfo" "shell_integration" ];
-
-  patches = [
-    (fetchpatch {
-      name = "fix-zsh-completion-test-1.patch";
-      url =
-        "https://github.com/kovidgoyal/kitty/commit/297592242c290a81ca4ba08802841f4c33a4de25.patch";
-      sha256 = "sha256-/V6y/4AaJsZvx1KS5UFZ+0zyAoZuLgbgFORZ1dX/1qE=";
-    })
-    (fetchpatch {
-      name = "fix-zsh-completion-test-2.patch";
-      url =
-        "https://github.com/kovidgoyal/kitty/commit/d8ed42ae8e014d9abf9550a65ae203468f8bfa43.patch";
-      sha256 = "sha256-Azgzqf5atW999FVn9rSGKMyZLsI692dYXhJPx07GBO0=";
-    })
-  ];
 
   # Causes build failure due to warning
   hardeningDisable = lib.optional stdenv.cc.isClang "strictoverflow";

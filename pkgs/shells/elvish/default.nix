@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   pname = "elvish";
-  version = "unstable-2021-02-02g${builtins.substring 0 9 src.rev}";
+  version = "unstable-2021-10-05g${builtins.substring 0 9 src.rev}";
 
   excludedPackages = [ "./website" "./website/cmd/elvdoc" "./cmd/nodaemon/elvish" ];
 
@@ -22,11 +22,11 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;
-    rev = "786d61260db18b786176a24e6e34963f29acb213";
-    sha256 = "1whzvylnsql81pz34lmd8fv3nxp31263pb56v1nw6bgj11df5b2w";
+    rev = "c37d89172416a9bf58c506c3e32575477f36cbf4";
+    sha256 = "0cf0y18gb8q1k0343l38qpk8v6gfcgazc7d7m1snfivyf5xqpvgm";
   };
 
-  vendorSha256 = "1nn5sj04dkx457s5pjlhpnmxpgdy3zzq5l7vgjkynpmikfwvlvxp";
+  vendorSha256 = "1cqdd2mvq6xnpwkjg5jkqwwcd64q257brmjmay1kgbmm2dbihpgk";
   CGO_ENABLED = 0;
 
   doCheck = false;

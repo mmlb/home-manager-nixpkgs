@@ -1,5 +1,5 @@
 { lib, stdenv, fetchFromGitHub, harfbuzz, installShellFiles, libicns, ncurses
-, pkg-config, python3
+, pkg-config, python3, librsync
 
 # linux specific
 , dbus, fontconfig, lcms2, libcanberra, libGL, libstartup_notification
@@ -22,31 +22,32 @@ python3.pkgs.buildPythonApplication rec {
     sha256 = "0y0mg8rr18mn0wzym7v48x6kl0ixd5q387kr5jhbdln55ph2jk9d";
   };
 
-  buildInputs = [ harfbuzz lcms2 ncurses ] ++ lib.optionals stdenv.isDarwin [
-    Cocoa
-    CoreGraphics
-    Foundation
-    IOKit
-    Kernel
-    libpng
-    OpenGL
-    python3
-    zlib
-  ] ++ lib.optionals stdenv.isLinux [
-    dbus
-    fontconfig
-    libcanberra
-    libunistring
-    libX11
-    libXcursor
-    libXext
-    libXi
-    libXinerama
-    libxkbcommon
-    libXrandr
-    wayland
-    wayland-protocols
-  ];
+  buildInputs = [ harfbuzz lcms2 ncurses librsync ]
+    ++ lib.optionals stdenv.isDarwin [
+      Cocoa
+      CoreGraphics
+      Foundation
+      IOKit
+      Kernel
+      libpng
+      OpenGL
+      python3
+      zlib
+    ] ++ lib.optionals stdenv.isLinux [
+      dbus
+      fontconfig
+      libcanberra
+      libunistring
+      libX11
+      libXcursor
+      libXext
+      libXi
+      libXinerama
+      libxkbcommon
+      libXrandr
+      wayland
+      wayland-protocols
+    ];
 
   nativeBuildInputs = [ installShellFiles ncurses pkg-config ]
     ++ (with python3.pkgs; [

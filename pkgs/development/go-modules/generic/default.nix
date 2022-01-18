@@ -54,6 +54,9 @@
 # grep compatible regex of packages to skip
 , excludedPackages ? ""
 
+# string containing space seprated list of packages to build
+, subPackages ? ""
+
 , ... }@args':
 
 with builtins;

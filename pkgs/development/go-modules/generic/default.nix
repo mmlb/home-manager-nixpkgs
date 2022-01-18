@@ -51,6 +51,9 @@
 , buildFlags ? ""
 , buildFlagsArray ? ""
 
+# grep compatible regex of packages to skip
+, excludedPackages ? ""
+
 , ... }@args':
 
 with builtins;

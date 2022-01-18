@@ -188,7 +188,6 @@ let
         cmd="$1"
         d="$2"
         . $TMPDIR/buildFlagsArray
-        isExcludedPackage "$d" && return 0
         local OUT
         if ! OUT="$(go $cmd $buildFlags "''${buildFlagsArray[@]}" ''${tags:+-tags=${lib.concatStringsSep "," tags}} ''${ldflags:+-ldflags="$ldflags"} -v -p $NIX_BUILD_CORES $d 2>&1)"; then
           if ! echo "$OUT" | grep -qE '(no( buildable| non-test)?|build constraints exclude all) Go (source )?files'; then
@@ -225,6 +224,7 @@ let
           export NIX_BUILD_CORES=1
       fi
       for pkg in $(getGoDirs ""); do
+        isExcludedPackage "$pkg" && continue
         echo "Building subPackage $pkg"
         buildGoDir install "$pkg"
       done

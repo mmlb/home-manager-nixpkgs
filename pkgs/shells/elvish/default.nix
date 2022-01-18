@@ -4,22 +4,15 @@ buildGoModule rec {
   pname = "elvish";
   version = "unstable-2021-12-16g${builtins.substring 0 9 src.rev}";
 
-  excludedPackages =
-    [ "./website" "./website/cmd/elvdoc" "./cmd/nodaemon/elvish" ];
+  subPackages = "cmd/elvish";
 
   ldflags = [
     "-s"
     "-w"
-    "-X src.elv.sh/pkg/buildinfo.VersionSuffix=-dev-${
-      builtins.substring 0 9 src.rev
-    }"
+    "-X src.elv.sh/pkg/buildinfo.VersionSuffix=-dev-${version}"
     "-X src.elv.sh/pkg/buildinfo.Reproducible=true"
   ];
 
-  patchPhase = ''
-    rm -rf website
-    rm -rf cmd/nodaemon
-  '';
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;
@@ -30,7 +23,7 @@ buildGoModule rec {
   vendorSha256 = "sha256-WmW8rYHL6smDQfmearv2xyQTxMyk3ys0REqTOQIBp4A=";
   CGO_ENABLED = 0;
 
-  doCheck = false;
+  doCheck = true;
 
   doInstallCheck = true;
   installCheckPhase = ''
@@ -44,7 +37,7 @@ buildGoModule rec {
         }
       }
 
-      expect version ${version}
+      expect version 0.18.0-dev-${version}
       expect reproducible \$true
     "
 

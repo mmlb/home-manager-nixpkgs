@@ -12,14 +12,14 @@ Cocoa, CoreGraphics, Foundation, imagemagick, IOKit, Kernel, OpenGL, libpng
 
 python3.pkgs.buildPythonApplication rec {
   pname = "kitty";
-  version = "unstable-2022-01-05g${builtins.substring 0 9 src.rev}";
+  version = "unstable-2022-01-17g${builtins.substring 0 9 src.rev}";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "kovidgoyal";
     repo = "kitty";
-    rev = "a574081012aeab5a78d44585d2c2acd47d0fc875";
-    sha256 = "1f8zyhrr2yjd90nrr7bysxxhkcjh82k8lrlq37dzkhjmx7cgqjdz";
+    rev = "4778e0eb23021d82804b0b0cee3929d74eae679b";
+    sha256 = "00zvik9k120l5xwykm226aq20xqcqv3iays6ry3ybp6zgcw64c1c";
   };
 
   buildInputs = [ harfbuzz lcms2 ncurses librsync ]

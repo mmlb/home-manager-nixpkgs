@@ -7,7 +7,8 @@ buildGoModule rec {
   subPackages = "cmd/elvish";
 
   CGO_ENABLED = 0;
-  ldflags = [ "-s" "-w" ];
+  ldflags =
+    [ "-s" "-w" "-X src.elv.sh/pkg/buildinfo.VersionSuffix=-dev-${version}" ];
 
   src = fetchFromGitHub {
     owner = "elves";
@@ -32,7 +33,7 @@ buildGoModule rec {
         }
       }
 
-      expect version ${version}
+      expect version ${version}-dev-${version}
       expect reproducible \$false
     "
 

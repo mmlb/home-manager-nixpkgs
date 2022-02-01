@@ -6,6 +6,7 @@ buildGoModule rec {
 
   subPackages = "cmd/elvish";
 
+  CGO_ENABLED = 0;
   ldflags = [
     "-s"
     "-w"

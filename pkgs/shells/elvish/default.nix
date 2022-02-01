@@ -6,7 +6,12 @@ buildGoModule rec {
 
   subPackages = [ "cmd/elvish" ];
 
-  ldflags = [ "-s" "-w" "-X src.elv.sh/pkg/buildinfo.Version==${version}" "-X src.elv.sh/pkg/buildinfo.Reproducible=true" ];
+  ldflags = [
+    "-s"
+    "-w"
+    "-X src.elv.sh/pkg/buildinfo.Version==${version}"
+    "-X src.elv.sh/pkg/buildinfo.Reproducible=true"
+  ];
 
   src = fetchFromGitHub {
     owner = "elves";

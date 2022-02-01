@@ -7,7 +7,7 @@ buildGoModule rec {
   subPackages = "cmd/elvish";
 
   CGO_ENABLED = 0;
-  ldflags = [ "-s" "-w" "-X src.elv.sh/pkg/buildinfo.Version==${version}" ];
+  ldflags = [ "-s" "-w" ];
 
   src = fetchFromGitHub {
     owner = "elves";

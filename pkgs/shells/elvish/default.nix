@@ -7,12 +7,7 @@ buildGoModule rec {
   subPackages = "cmd/elvish";
 
   CGO_ENABLED = 0;
-  ldflags = [
-    "-s"
-    "-w"
-    "-X src.elv.sh/pkg/buildinfo.Version==${version}"
-    "-X src.elv.sh/pkg/buildinfo.Reproducible=true"
-  ];
+  ldflags = [ "-s" "-w" "-X src.elv.sh/pkg/buildinfo.Version==${version}" ];
 
   src = fetchFromGitHub {
     owner = "elves";
@@ -38,7 +33,7 @@ buildGoModule rec {
       }
 
       expect version ${version}
-      expect reproducible \$true
+      expect reproducible \$false
     "
 
     runHook postInstallCheck

@@ -1,10 +1,10 @@
-{ lib, stdenv, fetchFromGitHub, python3Packages, libunistring, harfbuzz
-, fontconfig, pkg-config, ncurses, imagemagick, xsel, libstartup_notification
-, libGL, libX11, libXrandr, libXinerama, libXcursor, libxkbcommon, libXi
-, libXext, wayland-protocols, wayland, lcms2, librsync, installShellFiles, dbus
-, darwin, Cocoa, CoreGraphics, Foundation, IOKit, Kernel, OpenGL, libcanberra
-, libicns, libpng, python3, zlib, bashInteractive, zsh, fish, fetchpatch
-, nixosTests }:
+{ lib, stdenv, fetchFromGitHub, fetchpatch, python3Packages, bashInteractive
+, Cocoa, CoreGraphics, darwin, dbus, fish, fontconfig, Foundation, harfbuzz
+, imagemagick, installShellFiles, IOKit, Kernel, lcms2, libcanberra, libGL
+, libicns, libpng, librsync, libstartup_notification, libunistring, libX11
+, libXcursor, libXext, libXi, libXinerama, libxkbcommon, libXrandr, nixosTests
+, ncurses, OpenGL, pkg-config, python3, wayland, wayland-protocols, xsel, zlib
+, zsh }:
 
 with python3Packages;
 buildPythonApplication rec {
@@ -19,42 +19,42 @@ buildPythonApplication rec {
     sha256 = "sha256-c6XM/xeGZ68srf8xQJA1iYCUR3kXNceTMxsZAnbFmug=";
   };
 
-  buildInputs = [ harfbuzz ncurses lcms2 librsync ]
+  buildInputs = [ harfbuzz lcms2 librsync ncurses ]
     ++ lib.optionals stdenv.isDarwin [
       Cocoa
       CoreGraphics
       Foundation
       IOKit
       Kernel
-      OpenGL
       libpng
+      OpenGL
       python3
       zlib
     ] ++ lib.optionals (stdenv.isDarwin
       && (builtins.hasAttr "UserNotifications" darwin.apple_sdk.frameworks))
     [ darwin.apple_sdk.frameworks.UserNotifications ]
     ++ lib.optionals stdenv.isLinux [
-      fontconfig
-      libunistring
-      libcanberra
-      libX11
-      libXrandr
-      libXinerama
-      libXcursor
-      libxkbcommon
-      libXi
-      libXext
-      wayland-protocols
-      wayland
       dbus
+      fontconfig
+      libcanberra
+      libunistring
+      libX11
+      libXcursor
+      libXext
+      libXi
+      libXinerama
+      libxkbcommon
+      libXrandr
+      wayland
+      wayland-protocols
     ];
 
   nativeBuildInputs = [
+    furo
     installShellFiles
     ncurses
     pkg-config
     sphinx
-    furo
     sphinx-copybutton
     sphinxext-opengraph
     sphinx-inline-tabs
@@ -119,8 +119,8 @@ buildPythonApplication rec {
 
     # Shells needed for shell integration tests
     bashInteractive
-    zsh
     fish
+    zsh
   ];
 
   checkPhase = let

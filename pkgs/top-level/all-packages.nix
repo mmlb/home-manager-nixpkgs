@@ -2188,7 +2188,7 @@ with pkgs;
 
   sedutil = callPackage ../tools/security/sedutil { };
 
-  elvish = callPackage ../shells/elvish { };
+  elvish = callPackage ../shells/elvish { buildGoModule = buildGo118Module; };
 
   emplace = callPackage ../tools/package-management/emplace { };
 

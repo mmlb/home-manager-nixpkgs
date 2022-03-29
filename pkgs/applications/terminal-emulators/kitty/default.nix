@@ -100,6 +100,9 @@ python3.pkgs.buildPythonApplication rec {
       --shell-integration=enabled\ no-rc
     '';
   in ''
+    rm shell-integration/ssh/* kitty_tests/ssh.py
+    touch shell-integration/ssh/askpass.py
+    chmod +x shell-integration/ssh/askpass.py
     runHook preBuild
     ${if stdenv.isDarwin then ''
       ${python3.interpreter} setup.py kitty.app \

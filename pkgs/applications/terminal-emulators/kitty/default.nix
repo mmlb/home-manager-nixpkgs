@@ -13,14 +13,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "kitty";
-  version = "unstable-2022-03-29g${builtins.substring 0 9 src.rev}";
+  version = "unstable-2022-04-01g${builtins.substring 0 9 src.rev}";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "kovidgoyal";
     repo = "kitty";
-    rev = "087b52e3e084ad9b47b519349097cdfc0b716f2e";
-    sha256 = "18z872pg4vhll10imm1qidvrkk0vf2wqpbwb2l2w7n5g0ri55spi";
+    rev = "3257fdf24fb31eeb646a8f1baefd4de0dc22aaa1";
+    sha256 = "0hbmkh42lfn48migy8gyrfyb172hq15pc18vwgc3qfdg70kd8axl";
   };
 
   buildInputs = [ harfbuzz lcms2 librsync ncurses ]

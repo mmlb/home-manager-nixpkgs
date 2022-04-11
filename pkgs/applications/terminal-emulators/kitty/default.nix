@@ -69,26 +69,6 @@ python3.pkgs.buildPythonApplication rec {
 
   outputs = [ "out" "terminfo" "shell_integration" ];
 
-  patches = [
-    (fetchpatch {
-      name = "fix-zsh-completion-test-1.patch";
-      url =
-        "https://github.com/kovidgoyal/kitty/commit/297592242c290a81ca4ba08802841f4c33a4de25.patch";
-      sha256 = "sha256-/V6y/4AaJsZvx1KS5UFZ+0zyAoZuLgbgFORZ1dX/1qE=";
-    })
-    (fetchpatch {
-      name = "fix-zsh-completion-test-2.patch";
-      url =
-        "https://github.com/kovidgoyal/kitty/commit/d8ed42ae8e014d9abf9550a65ae203468f8bfa43.patch";
-      sha256 = "sha256-Azgzqf5atW999FVn9rSGKMyZLsI692dYXhJPx07GBO0=";
-    })
-    (fetchpatch {
-      name = "fix-build-with-non-framework-python-on-darwin.patch";
-      url = "https://github.com/kovidgoyal/kitty/commit/57cffc71b78244e6a9d49f4c9af24d1a88dbf537.patch";
-      sha256 = "sha256-1IGONSVCVo5SmLKw90eqxaI5Mwc764O1ur+aMsc7h94=";
-    })
-  ];
-
   # Causes build failure due to warning
   hardeningDisable = lib.optional stdenv.cc.isClang "strictoverflow";
 

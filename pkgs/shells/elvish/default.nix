@@ -2,19 +2,25 @@
 
 buildGoModule rec {
   pname = "elvish";
-  version = "unstable-2022-03-20g${builtins.substring 0 9 src.rev}";
+  version = "unstable-2022-04-09g${builtins.substring 0 9 src.rev}";
 
   subPackages = "cmd/elvish";
 
   CGO_ENABLED = 0;
-  ldflags =
-    [ "-s" "-w" "-X src.elv.sh/pkg/buildinfo.VersionSuffix=-dev-${version}" ];
+  ldflags = [
+    "-s"
+    "-w"
+    "-X src.elv.sh/pkg/buildinfo.VCSOverride=01011970-${
+      builtins.substring 0 12 src.rev
+    }"
+    "-X src.elv.sh/pkg/buildinfo.BuildVariant=nixpkgs"
+  ];
 
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;
-    rev = "5dc8c02a32cf54461ed30a994ccf2cfeae147ecf";
-    sha256 = "149rnds7ihi1xf9icv5sixzwxy4sfh798g3ck6hgwcgy5qfkjajd";
+    rev = "faebab700196277eb879b60b35f30e5e656ee44b";
+    sha256 = "0hl194jqqif1lnsc1h949g6j854kdnlfbjlrk3kchwm6jx3xlyi2";
   };
 
   vendorSha256 = "sha256-j0eo0l7lZLDMGpWtYCeLyJaTX5bBSCQpJxmMzmMrgI0=";
@@ -33,8 +39,7 @@ buildGoModule rec {
         }
       }
 
-      expect version 0.19.0-dev-${version}
-      expect reproducible \$false
+      expect version 0.19.0-dev.0.01011970-faebab700196+nixpkgs
     "
 
     runHook postInstallCheck

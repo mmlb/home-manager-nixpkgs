@@ -9,8 +9,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "mawww";
     repo = "kakoune";
-    rev = "b2c6bc46901368a1c30d47bd7718c2e10bc69480";
-    sha256 = "0z7vs0bxc57ffg86f9jfl4zlzpnqk2cy960p04vihipd7i0p8ckr";
+    rev = "90db664635013f6e857ec696403f2164032410a8";
+    sha256 = "1pm1hq8kzfmdh5wlwg2y02q0dp1zxiaczcr2n0m12sn7dmd9i94f";
   };
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ ncurses asciidoc docbook_xsl libxslt ];

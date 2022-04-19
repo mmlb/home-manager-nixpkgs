@@ -7,8 +7,14 @@ buildGoModule rec {
   subPackages = "cmd/elvish";
 
   CGO_ENABLED = 0;
-  ldflags =
-    [ "-s" "-w" "-X src.elv.sh/pkg/buildinfo.VersionSuffix=-dev-${version}" ];
+  ldflags = [
+    "-s"
+    "-w"
+    "-X src.elv.sh/pkg/buildinfo.VCSOverride=01011970-${
+      builtins.substring 0 12 src.rev
+    }"
+    "-X src.elv.sh/pkg/buildinfo.BuildVariant=nixpkgs"
+  ];
 
   src = fetchFromGitHub {
     owner = "elves";
@@ -33,8 +39,9 @@ buildGoModule rec {
         }
       }
 
-      expect version 0.18.0-dev-${version}
-      expect reproducible \$false
+      expect version 0.19.0-dev.0.01011970-${
+        builtins.substring 0 12 src.rev
+      }+nixpkgs
     "
 
     runHook postInstallCheck

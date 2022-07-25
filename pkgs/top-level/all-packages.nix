@@ -24848,6 +24848,8 @@ with pkgs;
 
   ginkgo = callPackage ../development/tools/ginkgo { };
 
+  gdlv = callPackage ../development/tools/gdlv { };
+
   go-bindata = callPackage ../development/tools/go-bindata { };
 
   go-bindata-assetfs = callPackage ../development/tools/go-bindata-assetfs { };

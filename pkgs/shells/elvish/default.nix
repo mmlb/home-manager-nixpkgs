@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   pname = "elvish";
-  version = "unstable-2022-06-23g${builtins.substring 0 9 src.rev}";
+  version = "unstable-2022-08-04g${builtins.substring 0 9 src.rev}";
 
   subPackages = "cmd/elvish";
 
@@ -19,8 +19,8 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "elves";
     repo = pname;
-    rev = "b47f8e0dc217f7eedc855e69f621d1a259c430e8";
-    sha256 = "0h295sh9d22sk41yb70b4v6gcgvy83vypmx1mls34j90pscgqv5k";
+    rev = "41fc578002e00b5dc6a13af25a5b717b4ccb8175";
+    sha256 = "06krvxckd95xx17xlg35q7i97vn0v9l3i21w9x94ylbcx10w1jy1";
   };
 
   vendorSha256 = "sha256-j0eo0l7lZLDMGpWtYCeLyJaTX5bBSCQpJxmMzmMrgI0=";
